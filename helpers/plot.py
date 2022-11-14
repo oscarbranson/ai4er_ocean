@@ -44,7 +44,7 @@ def obs_vs_pred(obs, pred, ax=None, **kwargs):
     
     return fig, ax
 
-def grid(pred, grid_df, **kwargs):
+def grid(pred, grid_df, clabel=None, **kwargs):
     """
     Transforms gridded prediction data to 2D array and plots it.
     
@@ -63,6 +63,8 @@ def grid(pred, grid_df, **kwargs):
     lon = np.arange(-179.5, 179.6, 1)
     lat = np.arange(-88.5, 88.6, 1)
     X, Y = np.meshgrid(lon, lat)
+    if 'cmap' not in kwargs:
+        kwargs['cmap'] = plt.cm.RdBu_r
 
     # assemble 2D grid
     for i, p in enumerate(pred):
@@ -71,8 +73,13 @@ def grid(pred, grid_df, **kwargs):
     
     fig = plt.figure(figsize=[8, 5])
     plt.pcolormesh(X, Y, pred_grid, shading='auto', 
-                   cmap=plt.cm.RdBu_r, **kwargs)
-    plt.colorbar(label='Predicted $\Delta pCO_2$')
+                   **kwargs)
+    if clabel is None:
+        if hasattr(pred, 'name'):
+            clabel = pred.name
+        else:
+            clabel = 'Predicted $\Delta pCO_2$'
+    plt.colorbar(label=clabel)
     
 def hist(obs_DeltaCO2, pred_DeltaCO2):
     """
