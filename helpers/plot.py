@@ -42,6 +42,8 @@ def obs_vs_pred(obs, pred, ax=None, **kwargs):
     
     ax.legend(title='R2, RMSE')
     
+    plt.show()
+    
     return fig, ax
 
 def grid(pred_DeltaCO2, grid_df):
@@ -75,6 +77,7 @@ def grid(pred_DeltaCO2, grid_df):
     plt.pcolormesh(X, Y, pred_grid, shading='auto', 
                    vmin=-limit, vmax=limit, cmap=plt.cm.RdBu_r)
     plt.colorbar(label='Predicted $\Delta pCO_2$')
+    plt.show()
     
 def hist(obs_DeltaCO2, pred_DeltaCO2):
     """
@@ -97,3 +100,4 @@ def hist(obs_DeltaCO2, pred_DeltaCO2):
     plt.legend()
     plt.xlabel('$\Delta pCO_2$')
     plt.ylabel('n')
+    plt.show()
